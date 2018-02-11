@@ -1,0 +1,173 @@
+﻿<Page
+    x:Class="BackgroundDownloaderSample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BackgroundDownloaderSample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="4" />
+        </Style>
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock 
+            Text="Filename:" />
+        <TextBox 
+            Name="FileNameTextBox"
+            Grid.Column="1">
+            <ToolTipService.ToolTip>
+                <ToolTip>
+                    <TextBlock xml:space="preserve">Use semicolon ; to delimit. Count (n) optional.
+e.g. myFile.exe;myOtherFile.exe(5)</TextBlock>
+                </ToolTip>
+            </ToolTipService.ToolTip>
+        </TextBox>
+
+        <TextBlock 
+            Text="Server Address:"
+            Grid.Row="1" />
+        <TextBox 
+            Name="ServerAddressTextBox"
+            Grid.Row="1"
+            Grid.Column="1" />
+
+        <TextBlock 
+            Text="Priority:"
+            Grid.Row="2" />
+        <ToggleSwitch
+            Name="PriorityToggleSwitch"
+            OffContent="Default"
+            OnContent="High"
+            Margin="4"
+            Grid.Row="2"
+            Grid.Column="1"/>
+
+        <TextBlock 
+            Text="Unconstrained:"
+            Grid.Row="3" />
+        <ToggleSwitch
+            Name="UnconstrainedToggleSwitch"
+            OffContent="Off"
+            OnContent="On"
+            Margin="4"
+            Grid.Row="3"
+            Grid.Column="1"
+            Toggled="UnconstrainedToggleSwitch_Toggled"
+            RightTapped="UnconstrainedToggleSwitch_RightTapped">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="UnconstrainedWarningFlyout">
+                    <StackPanel MaxWidth="400">
+                        <TextBlock TextWrapping="WrapWholeWords" xml:space="preserve">If the app isn't actively being used, at some point the system may slow down or pause long running downloads. The purpose of this behavior is to increase the device's battery life.
+
+By requesting unconstrained downloads, the app can request the system to not suspend any of downloads in the list for power saving reasons.
+
+Use this API with caution since it not only may reduce battery life, but it may show a prompt to the user.</TextBlock>
+                        <CheckBox 
+                            Name="ShowUnconstrainedWarningCheckBox"
+                            Margin="4"
+                            Content="Always show?"
+                            IsChecked="True"
+                            Unchecked="ShowUnconstrainedWarningCheckBox_Unchecked"/>
+                    </StackPanel>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </ToggleSwitch>
+
+        <StackPanel 
+            Orientation="Horizontal"
+            Grid.Row="4"
+            Grid.Column="1">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="4" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Name="StartButton" Click="StartDownload_Click">Start Download</Button>
+            <Button Name="PauseButton" Click="PauseAll_Click">Pause All</Button>
+            <Button Name="ResumeButton" Click="ResumeAll_Click">Resume All</Button>
+            <Button Name="CancelButton" Click="CancelAll_Click">Cancel All</Button>
+            <Button Name="ClearButton" Click="Clear_Click">Clear Session Files</Button>
+        </StackPanel>
+
+        <TextBlock 
+            Text="Output:"
+            Grid.Row="5" />
+        <TextBox
+            Name="OutputField"
+            Width="Auto"
+            Height="Auto"
+            IsReadOnly="True"
+            AcceptsReturn="True"
+            TextWrapping="NoWrap"
+            HorizontalAlignment="Stretch"
+            Grid.Row="5"
+            Grid.RowSpan="2"
+            Grid.Column="1" 
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollMode="Auto" 
+            TextChanged="OutputField_TextChanged"/>
+
+        <StackPanel 
+            Orientation="Horizontal"
+            Grid.Row="7"
+            Grid.Column="1">
+
+            <Button 
+                Name="ClearOutputButton" 
+                Click="ClearOutput_Click">
+                Clear Output
+            </Button>
+            
+            <CheckBox 
+                Name="AutoScrollCheckBox"
+                Margin="4"
+                IsChecked="True">
+                AutoScroll?
+            </CheckBox>
+
+            <CheckBox 
+                Name="VerboseLoggingCheckBox"
+                Margin="4"
+                Checked="VerboseLoggingCheckBox_Checked"
+                Unchecked="VerboseLoggingCheckBox_Unchecked">
+                Verbose Logging?
+            </CheckBox>
+
+            <ToggleSwitch
+                Name="ThemeToggleSwitch"
+                OffContent="Light Theme"
+                OnContent="Dark Theme"
+                VerticalAlignment="Center"
+                Margin="4"
+                Toggled="ThemeToggleSwitch_Toggled"/>
+        </StackPanel>
+    </Grid>
+</Page>
