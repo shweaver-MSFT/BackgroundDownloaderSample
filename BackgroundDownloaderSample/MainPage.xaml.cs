@@ -23,6 +23,7 @@ using Windows.Networking.BackgroundTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace BackgroundDownloaderSample
@@ -222,20 +223,35 @@ namespace BackgroundDownloaderSample
             }
         }
 
-        private void UnconstrainedToggleSwitch_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        /// <summary>
+        /// Secret right-click to reset the flag that determines when to show the unconstrained mode warning flyout.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UnconstrainedToggleSwitch_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             ShowUnconstrainedWarningCheckBox.IsChecked = true;
             UnconstrainedToggleSwitch_Toggled(sender, e);
         }
 
+        /// <summary>
+        /// When the unconstrained warning checkbox is unchecked, hide the flyout as well.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowUnconstrainedWarningCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             UnconstrainedWarningFlyout.Hide();
         }
 
+        /// <summary>
+        /// When the output changes scroll to the end, assuming autscroll is enabled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OutputField_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Auto scroll to endwhen content changes
+            // Auto scroll to end when content changes
             if (_doAutoScroll)
             {
                 var textbox = sender as TextBox;
@@ -245,19 +261,52 @@ namespace BackgroundDownloaderSample
             }
         }
 
+        /// <summary>
+        /// Update the RequestedTheme
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ThemeToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             RequestedTheme = (ThemeToggleSwitch.IsOn) ? ElementTheme.Dark : ElementTheme.Light;
         }
 
+        /// <summary>
+        /// Update the UseVerboseLogging setting in the LogService
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VerboseLoggingCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             LogService.UseVerboseLogging = VerboseLoggingCheckBox.IsChecked ?? true;
         }
 
+        /// <summary>
+        /// Update the UseVerboseLogging setting in the LogService
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VerboseLoggingCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             LogService.UseVerboseLogging = VerboseLoggingCheckBox.IsChecked ?? false;
+        }
+
+        /// <summary>
+        /// Reset the state of the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ResetAppStateButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileNameTextBox.Text = string.Empty;
+            ServerAddressTextBox.Text = string.Empty;
+            PriorityToggleSwitch.IsOn = false;
+            UnconstrainedToggleSwitch.IsOn = false;
+            ShowUnconstrainedWarningCheckBox.IsChecked = true;
+            OutputField.Text = string.Empty;
+            AutoScrollCheckBox.IsChecked = true;
+            VerboseLoggingCheckBox.IsChecked = true;
+            ThemeToggleSwitch.IsOn = false;
         }
     }
 }

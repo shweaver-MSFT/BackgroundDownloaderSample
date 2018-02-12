@@ -41,6 +41,7 @@ namespace BackgroundDownloaderSample.Tests
         protected static WindowsElement OutputField => GetKnownElement("OutputField");
         protected static WindowsElement ClearOutputButton => GetKnownElement("ClearOutputButton");
         protected static WindowsElement VerboseLoggingCheckBox => GetKnownElement("VerboseLoggingCheckBox");
+        protected static WindowsElement ResetAppStateButton => GetKnownElement("ResetAppStateButton");
 
         private static Dictionary<string, WindowsElement> _knownElements;
 
@@ -115,6 +116,14 @@ namespace BackgroundDownloaderSample.Tests
         protected void ClearSessionFiles()
         {
             ClearButton.Click();
+        }
+
+        /// <summary>
+        /// Reset the state of the test app
+        /// </summary>
+        protected void ResetAppState()
+        {
+            ResetAppStateButton.Click();
         }
 
         /// <summary>

@@ -142,6 +142,7 @@ Use this API with caution since it not only may reduce battery life, but it may 
 
             <Button 
                 Name="ClearOutputButton" 
+                Margin="4"
                 Click="ClearOutput_Click">
                 Clear Output
             </Button>
@@ -168,6 +169,13 @@ Use this API with caution since it not only may reduce battery life, but it may 
                 VerticalAlignment="Center"
                 Margin="4"
                 Toggled="ThemeToggleSwitch_Toggled"/>
+
+            <Button
+                Name="ResetAppStateButton"
+                Click="ResetAppStateButton_Click"
+                Margin="4">
+                Reset App State
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

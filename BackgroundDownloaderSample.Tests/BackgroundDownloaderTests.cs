@@ -40,7 +40,8 @@ namespace BackgroundDownloaderSample.Tests
         [TestInitialize]
         public void TestInit()
         {
-            
+            // Reset the app state
+            ResetAppState();
         }
 
         [TestCleanup]
@@ -48,11 +49,6 @@ namespace BackgroundDownloaderSample.Tests
         {
             // Make sure not to leave files behind after the test
             ClearSessionFiles();
-
-            // Clear out the TextBoxes
-            FileNameTextBox.SendKeys($"{Keys.Control}a{Keys.Control}{Keys.Delete}");
-            ServerAddressTextBox.SendKeys($"{Keys.Control}a{Keys.Control}{Keys.Delete}");
-            ClearOutputField();
         }
         #endregion
 
