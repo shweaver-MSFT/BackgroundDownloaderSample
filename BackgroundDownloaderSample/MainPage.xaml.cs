@@ -256,8 +256,15 @@ namespace BackgroundDownloaderSample
             {
                 var textbox = sender as TextBox;
                 var panel = (Panel)VisualTreeHelper.GetChild(textbox, 0);
-                var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(panel, 2);
-                scrollViewer.ChangeView(0, scrollViewer.ExtentHeight, 1);
+                for (var i = 0; i < VisualTreeHelper.GetChildrenCount(panel); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(panel, i);
+                    if (child is ScrollViewer)
+                    {
+                        var scrollViewer = child as ScrollViewer;
+                        scrollViewer.ChangeView(0, scrollViewer.ExtentHeight, 1);
+                    }
+                }
             }
         }
 
